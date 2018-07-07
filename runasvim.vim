@@ -22,3 +22,12 @@ function! runasvim#ParseSelectionAsCommand() range
 endfunction
 ""example mapping
 ""vnoremap <leader><CR> :call runasvim#ParseSelectionAsCommand()<CR>
+
+"AUTO MAPPING WHEN VIEWING VIM FILES:
+if !exists("VimFileAutoMaps")
+let VimFileAutoMaps=1
+augroup VimFileAutocmds
+	au BufRead,BufNewFile *.vim :nnoremap <buffer> <leader><CR> :call runasvim#ParseLineAsCommand()<CR>
+	au BufRead,BufNewFile *.vim :vnoremap <buffer> <leader><CR> :call runasvim#ParseSelectionAsCommand()<CR>
+augroup END
+endif
