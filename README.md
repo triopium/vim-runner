@@ -13,3 +13,4 @@ when .vim filetype is opened/read automapping is done.
 <leader><CR>	run selected lines as vim commands
 # Supported
 viml
+Rscript (minimalistic, fuller alternative is NVIM-R)
