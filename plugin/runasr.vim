@@ -4,15 +4,13 @@ function! runasr#ExeLine()
 	let l:cmd='Rscript -e ' . shellescape(l:cline)
 	let l:out=system(l:cmd)
 	echo l:out
-	""echo l:out
-	""exe l:cmd
-	""echo l:out
+	return l:out
 endfunction
 ""seq(1,100)
 
 nnoremap <buffer> <CR> :call runasr#ExeLine()
 
-function! runasr#ExeBlock(sfile)
+function! runasr#ExeBlock(sfile) range
 	let l:lines=getline(a:firstline,a:lastline)
 	let l:lines=array#ListSubstitute(l:lines,'^"\{,2}\|\s*','',0)
 	exe '0sp ' a:sfile
@@ -21,17 +19,19 @@ function! runasr#ExeBlock(sfile)
 	:w
 	:bd
 	let l:out=system('Rscript ' . a:sfile)
-	return l:out
-	""echo l:out
-	""exe a:lines . 'new ' . a:ofile
+	""let l:rlog='rlog.log'
+	""silent exe 'redir! > ' . l:rlog
+	redir @a
+		silent echo l:out
+	redir END
+	return @a
 endfunction
-""vnoremap <buffer> <CR> :call runasr#ExeBlock('/tmp/sfile.tmp')
-""cat(seq(1,100))
+vnoremap <buffer> <silent> <CR> :calf runasr#ExeBlock('/tmp/sfile.tmp')
+"
+""seq(1,100)
 ""1+1
 ""3+3
-function! runasr#DisplayProperties()
-	setlocal noswapfile nomodified
-endfunction
+
 function! runasr#Displayer(output,fname,lines)
 	if bufexists(a:fname)
 		let l:bfnr=bufwinnr(a:fname)
@@ -60,5 +60,4 @@ function! runasr#Displayer(output,fname,lines)
 		endif
 	endif
 endfunction
-""let out=runasr#ExeBlock() 
-vnoremap <buffer> <silent> <CR> :call runasr#Displayer(runasr#ExeBlock('rscript.tmp'),'/tmp/fout.log',10)
+""call runasr#Displayer(runasr#ExeBlock('/tmp/rscript.tmp'),'/tmp/rscript.log',10)
