@@ -7,8 +7,7 @@ function! runasr#ExeLine()
 	return l:out
 endfunction
 ""seq(1,100)
-
-""nnoremap <buffer> <CR> :call runasr#ExeLine()
+nnoremap <buffer> <CR> :call runasr#ExeLine()
 
 function! runasr#ExeBlock(sfile,outfile) range
 	let l:lines=getline(a:firstline,a:lastline)
