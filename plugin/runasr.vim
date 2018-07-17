@@ -30,6 +30,7 @@ function! runasr#ExeBlock(sfile,outfile) range
 	""Construct script file
 	let l:lines=getline(a:firstline,a:lastline)
 	let l:lines=array#ListSubstitute(l:lines,'^"\{,2}\|\s*','',0)
+	let l:lines=array#ListSubstitute(l:lines,'^#\{,2}\|\s*','',0)
 	exe '0sp ' a:sfile
 	%d_
 	0put = l:lines
@@ -44,7 +45,7 @@ function! runasr#ExeBlock(sfile,outfile) range
 	call runasr#Displayer(l:outfile)
 endfunction
 vnoremap <buffer> <silent> <CR> :call runasr#ExeBlock('/tmp/sfile.tmp','/tmp/rlog.log')<CR>
-""seq(1,100)
+""#seq(1,100)
 ""x<-seq(1,10)
 ""x
 function! runasr#ExeFile(outfile)
@@ -56,5 +57,5 @@ function! runasr#ExeFile(outfile)
 	let l:outfile=a:outfile
 	call runasr#Displayer(l:outfile)
 endfunction
-nnoremap <buffer> <leader><CR> :call runasr#ExeFile()
+nnoremap <buffer> <leader><CR> :call runasr#ExeFile("/tmp/Rscript.log")
 
