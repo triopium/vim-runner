@@ -1,6 +1,7 @@
 function! runasr#ExeLine()
 	let l:cline=getline('.')
 	let l:cline=substitute(l:cline,'^"\{1,2}\|\s*','',0)
+	let l:cline=substitute(l:cline,'^#\{1,2}\|\s*','',0)
 	let l:cmd='Rscript -e ' . shellescape(l:cline)
 	let l:out=system(l:cmd)
 	echo l:out
