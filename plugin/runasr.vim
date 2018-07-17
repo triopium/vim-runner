@@ -24,7 +24,6 @@ function! runasr#Displayer(output)
 		w
 	endif
 endfunction
->>>>>>> fbe97d414312ec9c7bdeb84e6e27256e1b637c37
 
 function! runasr#ExeBlock(sfile,outfile) range
 	""Construct script file
